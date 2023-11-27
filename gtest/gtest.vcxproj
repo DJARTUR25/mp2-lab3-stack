@@ -139,11 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\test\gtest.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="gtest-all.cc" />
     <ClCompile Include="gtest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gtest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

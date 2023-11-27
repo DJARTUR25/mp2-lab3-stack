@@ -50,7 +50,7 @@ void TCalc::ToPostfix() {
 double TCalc::Calc() {
 	C.Clear(); D.Clear();
 	string str = '(' + infix + ')';
-	for (int i = 0; i < str.size(); i++) {
+	for (int i = 0; i < str.size(); i++) {					// проверка условий для подсчета операций
 		if (str[i] == '(') C.Push(str[i]);
 		if (str[i] == ')') {
 			char elem = C.Pop();
@@ -61,10 +61,34 @@ double TCalc::Calc() {
 				if (elem == '+') y = x1 + x2;
 				if (elem == '-') y = x1 - x2;
 				if (elem == '*') y = x1 * x2;
-				if (elem == '/') y = x1 / x2;
+				if (elem == '/') y = x1 / x2;					// добавить функцию ^ - возведение в степень, приоритет = 3
 				D.Push(y);
 				elem = C.Pop();
 			}
 		}
+		if ((str[i] >= '0') && (str[i] <= '9')) {				//вычисляет число 
+			size_t pos;
+			double x;
+			x = stod(&str[i], &pos);
+			D.Push(x);
+			i = i + pos - 1;
+		}
+		if ((str[i] == '+') || (str[i] == '-') || (str[i] == '*') || (str[i] == '/')) {			//добавляет в стек операнды, вычисляет, если
+			char elem = C.Pop();																//приоритет меньше, что считает
+			while (prior(elem) > prior(str[i])) {
+				double y;
+				double x2 = D.Pop();
+				double x1 = D.Pop();
+				if (elem = '+') y = x1 + x2;
+				if (elem = '-') y = x1 - x2;
+				if (elem = '*') y = x1 * x2;
+				if (elem = '/') y = x1 / x2;	// может быть неточный ответ. При тесте сравниваем не вручную вбитые значения, а то, что посчитает компилятор
+				D.Push(y);
+				elem = C.Pop();
+			}
+			C.Push(elem);
+			C.Push(str[i]);
+		}
 	}
+	return D.Pop();
 }
