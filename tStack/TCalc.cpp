@@ -46,3 +46,25 @@ void TCalc::ToPostfix() {
 		}
 	}
 }
+
+double TCalc::Calc() {
+	C.Clear(); D.Clear();
+	string str = '(' + infix + ')';
+	for (int i = 0; i < str.size(); i++) {
+		if (str[i] == '(') C.Push(str[i]);
+		if (str[i] == ')') {
+			char elem = C.Pop();
+			while (elem != ')') {
+				double x1 = D.Pop();
+				double x2 = D.Pop();
+				double y = 0;
+				if (elem == '+') y = x1 + x2;
+				if (elem == '-') y = x1 - x2;
+				if (elem == '*') y = x1 * x2;
+				if (elem == '/') y = x1 / x2;
+				D.Push(y);
+				elem = C.Pop();
+			}
+		}
+	}
+}

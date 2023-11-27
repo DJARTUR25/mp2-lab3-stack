@@ -9,6 +9,8 @@ using namespace std;
 class TCalc
 {
 	string infix, postfix;
+	TStack<double> D;
+	TStack<char> C;
 	string set_infix(string s) {
 		infix = s;
 	}
@@ -23,8 +25,7 @@ class TCalc
 	void get_postfix() {
 		cout << postfix;
 	};
-	TStack<double> D;
-	TStack<char> C;
+
 	int prior(char op) {
 		if ((op == '(') || (op == ')')) return 0;
 		if ((op == '+') || (op == '-')) return 1;
@@ -39,4 +40,5 @@ public:
 	}
 	double CalcPostfix();
 	void ToPostfix();			// функция перевода строки из инфиксной в постфиксную. В начале почистить стек метлой!
+	double Calc();
 };
