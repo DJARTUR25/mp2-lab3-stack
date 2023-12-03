@@ -20,7 +20,7 @@ public:
 		CurrInd = -1;
 	}
 	~TStack() { delete[] pMem; }		//деструктор
-	TStack(const TStack& s) {			//конструктор копирования (+ искл.)
+	TStack(const TStack& s) {			//конструктор копирования
 		MaxSize = s.MaxSize;
 		pMem = new T[MaxSize];
 		CurrInd = s.CurrInd;
@@ -29,14 +29,14 @@ public:
 
 	int size() { return MaxSize; }
 
+	int idx() { return CurrInd; }
+
 	void print() {
 		for (int i = 0; i <= CurrInd; i++)
 			cout << pMem[i] << "  ";
 		cout << endl;
 		cout << endl;
 	}
-	// + вывод на экран в строку (в столбик не надо, потом добавим)
-	//посмотреть кол-во элементов в стеке
 	
 	bool empty() {				//операция проверки, есть ли что-то в стеке (проверка на пустоту)
 		if (CurrInd < 0) 
@@ -52,37 +52,34 @@ public:
 			return false;
 	}
 
-	// + и - в или из стека на вершину или с вершины
-
 	void Push(const T &elem) {			//операция добавления элемента на вершину стека
 		if (CurrInd + 1 >= MaxSize)
 			throw ("Stack overflow!\n");
-		pMem[CurrInd + 1] = elem;
 		CurrInd++;
+		pMem[CurrInd] = elem;
 	}
 
 	T Pop() {							//операция удаления элемента с вершины стека
 		if (CurrInd == -1)
 			throw ("Stack is empty!\n");
+		T res = pMem[CurrInd];
 		CurrInd--;
-		return pMem[CurrInd++];
+		return res;
 	}
 
-	//сделать:
-	//			первое, второе и третье; метод очистки стека (массив тот же, элементы останутся, но CurrInd == -1)
-
-	void Clear() {					//очистка стека
+	void Clear() {					// очистка стека
 		CurrInd = -1;
 		delete[] pMem;
 	}
 
-	friend istream& operator>>(istream& istr, TStack& s)
+	friend istream& operator>>(istream& istr, TStack& s)		// ввод с клавиатуры
 	{
 		for (int i = 0; i < s.MaxSize; i++)
 			istr >> s.pMem[i];
 		return istr;
 	}
-	friend ostream& operator<<(ostream& ostr, const TStack& s)
+
+	friend ostream& operator<<(ostream& ostr, const TStack& s)	// вывод с клавиатуры
 	{
 		if (s.CurrInd == -1) {
 			ostr << "Stack Is Empty" << endl;

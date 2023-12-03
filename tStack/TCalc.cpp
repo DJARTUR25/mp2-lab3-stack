@@ -1,3 +1,4 @@
+#pragma once
 #include "TCalc.h"
 
 double TCalc::CalcPostfix() {			// в конце очистить стек!
@@ -61,12 +62,13 @@ double TCalc::Calc() {
 				if (elem == '+') y = x1 + x2;
 				if (elem == '-') y = x1 - x2;
 				if (elem == '*') y = x1 * x2;
-				if (elem == '/') y = x1 / x2;					// добавить функцию ^ - возведение в степень, приоритет = 3
+				if (elem == '/') y = x1 / x2;				// добавить функцию ^ - возведение в степень, приоритет = 3
+				if (elem == '^') y = pow(x1, x2);
 				D.Push(y);
 				elem = C.Pop();
 			}
 		}
-		if ((str[i] >= '0') && (str[i] <= '9')) {				//вычисляет число 
+		if ((str[i] >= '0') && (str[i] <= '9')) {			//вычисляет число 
 			size_t pos;
 			double x;
 			x = stod(&str[i], &pos);
@@ -79,10 +81,11 @@ double TCalc::Calc() {
 				double y;
 				double x2 = D.Pop();
 				double x1 = D.Pop();
-				if (elem = '+') y = x1 + x2;
-				if (elem = '-') y = x1 - x2;
-				if (elem = '*') y = x1 * x2;
-				if (elem = '/') y = x1 / x2;	// может быть неточный ответ. При тесте сравниваем не вручную вбитые значения, а то, что посчитает компилятор
+				if (elem == '+') y = x1 + x2;
+				if (elem == '-') y = x1 - x2;
+				if (elem == '*') y = x1 * x2;
+				if (elem == '/') y = x1 / x2;	// может быть неточный ответ. При тесте сравниваем не вручную вбитые значения, а то, что посчитает компилятор
+				if (elem == '^') y = pow(x1, x2);
 				D.Push(y);
 				elem = C.Pop();
 			}
